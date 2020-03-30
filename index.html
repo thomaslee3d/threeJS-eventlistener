@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{margin:0;}
+        canvas{width: 100%;height: 100%;}
+    </style>
+</head>
+<body>
+    <script src="js/three.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
+    <script src="js/OrbitControls.js"></script>
+    <script>
+
+        let scene = new THREE.Scene();
+        let camera = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000)    
+        let renderer = new THREE.WebGLRenderer({antialias: true});
+
+        renderer.setClearColor("#e5e5e5");
+        renderer.setSize(window.innerWidth,window.innerHeight);
+
+        document.body.appendChild(renderer.domElement);
+
+        let raycaster = new THREE.Raycaster();
+        let mouse = new THREE.Vector2();
+
+        
+        window.addEventListener('resize', () => {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.position = 7
+            camera.updateProjectionMatrix();
+
+        })
+
+        const geometry = new THREE.BoxGeometry(2,2,2)
+        const material = new THREE.MeshNormalMaterial({wireframe:false})
+
+        const sphere = new THREE.SphereGeometry(10,10,10)
+        const wireframe = new THREE.MeshNormalMaterial({wireframe:true})
+        let ball = new THREE.Mesh(sphere,wireframe)
+        scene.add(ball)
+
+      
+
+        let cube = new THREE.Mesh(geometry,material);
+        scene.add(cube);
+
+        let cube2 = new THREE.Mesh(geometry,material);
+        cube2.position.x = 2;
+        scene.add(cube2);
+
+        let cube3 = new THREE.Mesh(geometry,material);
+        cube3.position.x = 4;
+        scene.add(cube3);
+
+        let cube4 = new THREE.Mesh(geometry,material);
+        cube4.position.x = -1.25;
+        cube4.position.y = -1.25;
+        scene.add(cube4);
+
+        let cube5 = new THREE.Mesh(geometry,material);
+        cube5.position.y = -1.25;
+        scene.add(cube5);
+
+        let cube6 = new THREE.Mesh(geometry,material);
+        cube6.position.y = -1.25;
+        cube6.position.x = 1.25
+        scene.add(cube6);
+
+        let cube7 = new THREE.Mesh(geometry,material);
+        cube7.position.x = -1.25;
+        cube7.position.y = -2.50;
+        scene.add(cube7);
+
+        let cube8 = new THREE.Mesh(geometry,material);
+        cube8.position.y = -2.50;
+        scene.add(cube8);
+
+        let cube9 = new THREE.Mesh(geometry,material);
+        cube9.position.y = -2.50;
+        cube9.position.x = 1.25;
+        scene.add(cube9);
+
+        camera.position.z = 10;
+
+        controls = new THREE.OrbitControls(camera, renderer.domElement)
+        controls.minDistance = 1
+        controls.maxDistance = 1000
+
+        let render = function(){
+            requestAnimationFrame(render);
+            
+
+            renderer.render(scene, camera);
+        }
+
+ 
+        //Game loop updates renders repeat
+        let gameLoop = function(){
+
+            requestAnimationFrame(gameLoop);
+            render();
+            
+        }
+        gameLoop()
+
+    </script>
+</body>
+</html>
